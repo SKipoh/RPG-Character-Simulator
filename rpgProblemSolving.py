@@ -1,4 +1,5 @@
 import random
+import json
 
 # List of two and three letter syllables for use in generating a random name
 syllables = ["en ", "da ", "fu ", "el ", "kar ", "tuk ", "ar ", "cha ", "ing ", "ant ", "low "]
@@ -120,6 +121,9 @@ class knight(character):
         # Returns stats to the the function that called
         return stats
 
+    def jsonify(self):
+        return self.__dict__
+
 
 # A function to randomly generate characters, parsing
 # a list of the classes
@@ -157,7 +161,7 @@ def menu(gameChars):
         # If the answer is "Y" or "y", then the User is asked if they want to
         # save the generated characters to a file for later
         if input("Would you like to save this team? [y or n]: ") == "y":
-            saveCharsToFile()
+            saveCharsToFile(gameChars)
     elif ans == "N" or ans == "n":
         # If the answer is no, the User is then prompted for if they want to
         # add or remove a character from the list
@@ -282,8 +286,11 @@ def charEdit(ans, gameChars):
         menu(gameChars)
 
 
-def saveCharsToFile():
+def saveCharsToFile(gameChars):
+    with open("characterFile.json", "w") as write_file:
+        json.dump([x.__dict__ for x in gameChars], write_file)
 
+    print("File 'characterFile.json' has been written to...")
 
 
 def main():
