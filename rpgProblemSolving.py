@@ -156,8 +156,8 @@ def menu(gameChars):
     if ans == "Y" or ans == "y":
         # If the answer is "Y" or "y", then the User is asked if they want to
         # save the generated characters to a file for later
-        if input("Would you like to save this team? [y or n]: "):
-            print("nlergh")
+        if input("Would you like to save this team? [y or n]: ") == "y":
+            saveCharsToFile()
     elif ans == "N" or ans == "n":
         # If the answer is no, the User is then prompted for if they want to
         # add or remove a character from the list
@@ -283,7 +283,7 @@ def charEdit(ans, gameChars):
 
 
 def saveCharsToFile():
-    
+
 
 
 def main():
