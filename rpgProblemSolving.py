@@ -5,8 +5,6 @@ import json
 syllables = ["en ", "da ", "fu ", "el ", "kar ", "tuk ", "ar ", "cha ", "ing ", "ant ", "low "]
 # A list of all the different character types
 charTypes = ["B", "E", "W", "D", "K"]
-# list that will hold all the instances of the character objects
-generatedChars = []
 
 
 # Function for generating a random name using three syllables
@@ -33,7 +31,8 @@ class character:
 
 
 class characterClass(character):
-    # 
+    # __init__ method for setting the object properties, both for the
+    # characterClass obkect and character object
     def __init__(self, charName, charType, charHealth, charPower, charSAttackPwr, charSpeed):
         character.__init__(self, charName, charType, charHealth)
         self.power = charPower
@@ -47,9 +46,6 @@ class characterClass(character):
         # Returns stats to the the function that called
         return stats
 
-    # Method to allow the User to set their own values for the
-    # character, it needs a String variable for which stat to
-    # change, and a value to change it too
     def setStats(self, statToChange, statVal):
         if statToChange == "N" or statToChange == "n":
             self.name = statVal
@@ -208,7 +204,7 @@ def saveCharsToFile(gameChars):
     with open("characterFile.json", "w") as write_file:
         # using the json.dump function to take the objects in the gameChars
         # list and serialise it into JSON
-        json.dump([x.__dict__ for x in gameChars], write_file)
+        json.dump([x.__dict__ for x in gameChars], write_file, sort_keys=True, indent=4)
     # Tells the User that the file has been written
     print("File 'characterFile.json' has been written to...")
     # Calling the menu function with the game characters parsed to it
@@ -216,18 +212,35 @@ def saveCharsToFile(gameChars):
 
 
 def openCharsToFile(gameChars):
+    # Pretty formatting for telling the User we are loading a file
     print("Loading File...")
-    ans = input("Please ensure the file is called 'characterFile.json', then press [1]...")
+    # Using a WHILE loop to infintely check that the User has enetered a "1"
+    # indicating that the file is in the correct place
     while True:
+        # Using an input to Prompt the User to check that a file called
+        # characterFile.json sits in the root directory of this program
+        ans = input("Please ensure the file is called 'characterFile.json', then press [1]...")
+        # If the User has entered "1", then use the WITH keyword to open the
+        # JSON file "characterFile"
         if ans == "1":
+            # Opening the file, referring to the created object as "read_file"
             with open("characterFile.json") as read_file:
-                y = json.load(read_file)
-                for x in y:
-                    gameChars.append(x)
+                # Using the JSON module to load the contents of "read_file"
+                # into the ImportedChars list
+                ImportChars = json.load(read_file)
+                # Using a FOR loop, we take the list-of-lists in ImportedChars
+                for character in ImportChars:
+                    # and insert them into the gameChars list using the append
+                    # method to insert them at the newest index
+                    gameChars.append(characterClass(character['name'], character['type'], character['health'], character['power'], character['sAttackPwr'], character['speed']))
 
-                for z in gameChars:
-                    print(z.getStats())
-        break
+            # We then print out the list of gameChars to the User
+            for x in gameChars:
+                # We use the character's getStats() method
+                print(x.getStats())
+
+            # Calling the menu fucntion, parsing it the gameChars list
+            menu(gameChars)
 
 
 def main():
@@ -256,7 +269,10 @@ def main():
         # Calling the menu funtion, and parsing the list of characters in
         # gameChars
         menu(gameChars)
+    # If the User enters a "2", then they wish to open characters from a file
     elif ans == "2":
+        # Calling the openCharsToFile function, and parsing it the empty
+        # gameChars list
         openCharsToFile(gameChars)
 
 
