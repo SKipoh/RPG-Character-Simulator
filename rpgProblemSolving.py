@@ -1,11 +1,10 @@
 import random
+import json
 
 # List of two and three letter syllables for use in generating a random name
 syllables = ["en ", "da ", "fu ", "el ", "kar ", "tuk ", "ar ", "cha ", "ing ", "ant ", "low "]
 # A list of all the different character types
 charTypes = ["B", "E", "W", "D", "K"]
-# list that will hold all the instances of the character objects
-generatedChars = []
 
 
 # Function for generating a random name using three syllables
@@ -25,18 +24,17 @@ def rndName():
 # Base Class for creating an RPG character
 class character:
     # __init__ method, creates the name, type, health properties
-    def __init__(self, charType, charHealth):
-        self.name = rndName()
+    def __init__(self, charName, charType, charHealth):
+        self.name = charName
         self.type = charType
         self.health = charHealth
 
 
-# A subclass for creating a Barbarian character, inherits the Character class
-# and adds the power, sAttackPwr, and speed properties
-class barbarian(character):
-    def __init__(self, charPower, charSAttackPwr, charSpeed):
-        # Getting the properties from the inheritted character Base Class
-        character.__init__(self, "B", 100)
+class characterClass(character):
+    # __init__ method for setting the object properties, both for the
+    # characterClass obkect and character object
+    def __init__(self, charName, charType, charHealth, charPower, charSAttackPwr, charSpeed):
+        character.__init__(self, charName, charType, charHealth)
         self.power = charPower
         self.sAttackPwr = charSAttackPwr
         self.speed = charSpeed
@@ -48,77 +46,19 @@ class barbarian(character):
         # Returns stats to the the function that called
         return stats
 
-
-# A subclass for creating a Elf character, inherits the Character class
-# and adds the power, sAttackPwr, and speed properties
-class elf(character):
-    def __init__(self, charPower, charSAttackPwr, charSpeed):
-        # Getting the properties from the inheritted character Base Class
-        character.__init__(self, "E", 100)
-        self.power = charPower
-        self.sAttackPwr = charSAttackPwr
-        self.speed = charSpeed
-
-    # Method for getting and returning all the stats of the character
-    def getStats(self):
-        # Creating a string to hold all the stats, using concatenation
-        stats = "Name: %s, Type: %s, Health: %s, Power: %s, Special Attack Power: %s, Speed: %s" % (self.name, self.type, self.health, self.power, self.sAttackPwr, self.speed)
-        # Returns stats to the the function that called
-        return stats
-
-
-# A subclass for creating a Wizard character, inherits the Character class
-# and adds the power, sAttackPwr, and speed properties
-class wizard(character):
-    def __init__(self, CharPower, CharSAttackPwr, CharSpeed):
-        # Getting the properties from the inheritted character Base Class
-        character.__init__(self, "W", 100)
-        self.power = CharPower
-        self.sAttackPwr = CharSAttackPwr
-        self.speed = CharSpeed
-
-    # Method for getting and returning all the stats of the character
-    def getStats(self):
-        # Creating a string to hold all the stats, using concatenation
-        stats = "Name: %s, Type: %s, Health: %s, Power: %s, Special Attack Power: %s, Speed: %s" % (self.name, self.type, self.health, self.power, self.sAttackPwr, self.speed)
-        # Returns stats to the the function that called
-        return stats
-
-
-# A subclass for creating a Dragon character, inherits the Character class
-# and adds the power, sAttackPwr, and speed properties
-class dragon(character):
-    def __init__(self, CharPower, CharSAttackPwr, CharSpeed):
-        # Getting the properties from the inheritted character Base Class
-        character.__init__(self, "D", 100)
-        self.power = CharPower
-        self.sAttackPwr = CharSAttackPwr
-        self.speed = CharSpeed
-
-    # Method for getting and returning all the stats of the character
-    def getStats(self):
-        # Creating a string to hold all the stats, using concatenation
-        stats = "Name: %s, Type: %s, Health: %s, Power: %s, Special Attack Power: %s, Speed: %s" % (self.name, self.type, self.health, self.power, self.sAttackPwr, self.speed)
-        # Returns stats to the the function that called
-        return stats
-
-
-# A subclass for creating a Knight character, inherits the Character class
-# and adds the power, sAttackPwr, and speed properties
-class knight(character):
-    def __init__(self, CharPower, CharSAttackPwr, CharSpeed):
-        # Getting the properties from the inheritted character Base Class
-        character.__init__(self, "B", 100)
-        self.power = CharPower
-        self.sAttackPwr = CharSAttackPwr
-        self.speed = CharSpeed
-
-    # Method for getting and returning all the stats of the character
-    def getStats(self):
-        # Creating a string to hold all the stats, using concatenation
-        stats = "Name: %s, Type: %s, Health: %s, Power: %s, Special Attack Power: %s, Speed: %s" % (self.name, self.type, self.health, self.power, self.sAttackPwr, self.speed)
-        # Returns stats to the the function that called
-        return stats
+    def setStats(self, statToChange, statVal):
+        if statToChange == "N" or statToChange == "n":
+            self.name = statVal
+        elif statToChange == "T" or statToChange == "t":
+            self.type = statVal
+        elif statToChange == "H" or statToChange == "h":
+            self.health = statVal
+        elif statToChange == "P" or statToChange == "p":
+            self.power = statVal
+        elif statToChange == "SAP" or statToChange == "sap":
+            self.sAttackPwr = statVal
+        elif statToChange == "S" or statToChange == "s":
+            self.speed = statVal
 
 
 # A function to randomly generate characters, parsing
@@ -131,19 +71,19 @@ def generateCharacters(classes):
     # "B" will instantiate an instance of the Barbarian object
     if choice == "B":
         # The new instance is then returned
-        return barbarian(70, 20, 50)
+        return characterClass(rndName(), "Barbarian", 100, 70, 20, 50)
     # If the choice selected is an instance of an Elf will be created
     elif choice == "E":
-        return elf(30, 60, 10)
+        return characterClass(rndName(), "Elf", 100, 30, 60, 10)
     # "W" will instantiate a Wizard
     elif choice == "W":
-        return wizard(50, 70, 30)
+        return characterClass(rndName(), "Wizard", 100, 50, 70, 30)
     # If the choice is a "D" then a Dragon appears
     elif choice == "D":
-        return dragon(90, 40, 50)
+        return characterClass(rndName(), "Dragon", 100, 90, 40, 50)
     # And finally, if a "K" is selected, then a Knight is created
     elif choice == "K":
-        return knight(60, 10, 60)
+        return characterClass(rndName(), "Knight", 100, 60, 10, 60)
 
 
 # Menu function for allowing the user to save and edit the characters
@@ -156,8 +96,8 @@ def menu(gameChars):
     if ans == "Y" or ans == "y":
         # If the answer is "Y" or "y", then the User is asked if they want to
         # save the generated characters to a file for later
-        if input("Would you like to save this team? [y or n]: "):
-            print("nlergh")
+        if input("Would you like to save this team? [y or n]: ") == "y":
+            saveCharsToFile(gameChars)
     elif ans == "N" or ans == "n":
         # If the answer is no, the User is then prompted for if they want to
         # add or remove a character from the list
@@ -235,7 +175,7 @@ def charEdit(ans, gameChars):
         # gameChars list
         charAns = input("Please enter the number for the character you wish to edit: ")
         # Subtracting 1 from the uer input, because arrays start from 0
-        charAns -= 1
+        charAns = int(charAns) - 1
         # We then get the User to tell us what stat they want to edit, using
         # a single, or short set of characters, instead of the full description
         editAns = input("Which Stat would you like to edit?[N, T, H, P, SAP, S]: ")
@@ -246,67 +186,94 @@ def charEdit(ans, gameChars):
         # into the variable y. This is only for convenience, so I didn't use
         # a proper name
         y = gameChars[int(charAns)]
-        # An IF ELIF statement to check which state was needing to change. If
-        # the User entered "N", then they wanted to change the Name
-        if editAns == "N":
-            # The object in y has it's name property changed to whatever the
-            # User specified in changeToAns
-            y.Name = int(changeToAns)
-        # If the User entered a "T", then they wanted to change the character
-        # type
-        elif editAns == "T":
-            # The object in y has it's type property change to the value of
-            # changeToAns
-            y.type = int(changeToAns)
-        # Same again with "H", except this is for health
-        elif editAns == "H":
-            # The property health has it's value changed to changeToAns
-            y.health = int(changeToAns)
-        # If the User enters "P", they want the power changed
-        elif editAns == "P":
-            # y has it's power property changed to changeToAns
-            y.Power = int(changeToAns)
-        # If the User enters SAP, then the stat to change is the Special Attack
-        # Power property
-        elif editAns == "SAP":
-            # The sAttackPwr property of y is changed to changeToAns
-            y.sAttackPwr = int(changeToAns)
-        # If the input is "S", the User wants to change the Speed
-        elif editAns == "S":
-            # The speed property of y is then changed to the value in changeToAns
-            y.Speed = int(changeToAns)
+        # Calling the setStats Method of the characterClass to change the stats
+        # of the editAns variable to whatever is in changeToAns
+        y.setStats(editAns, changeToAns)
 
-        # Finally, we print out a statement showing the User what has happened
-        print("%s changed to %s" % (editAns, changeToAns))
-        # Then we call the Menu again, and see what the User wants to do next
+        # Using a FOR loop to display the gameChars list
+        for z in gameChars:
+            # Printing the output of the getStats method
+            print(z.getStats())
+        # Calling the menu function, and parsing it the gameChars list
         menu(gameChars)
 
 
-def saveCharsToFile():
-    
+def saveCharsToFile(gameChars):
+    # Using a WITH operator for easy readability. creating and opening a file
+    # in write mode
+    with open("characterFile.json", "w") as write_file:
+        # using the json.dump function to take the objects in the gameChars
+        # list and serialise it into JSON
+        json.dump([x.__dict__ for x in gameChars], write_file, sort_keys=True, indent=4)
+    # Tells the User that the file has been written
+    print("File 'characterFile.json' has been written to...")
+    # Calling the menu function with the game characters parsed to it
+    menu(gameChars)
+
+
+def openCharsToFile(gameChars):
+    # Pretty formatting for telling the User we are loading a file
+    print("Loading File...")
+    # Using a WHILE loop to infintely check that the User has enetered a "1"
+    # indicating that the file is in the correct place
+    while True:
+        # Using an input to Prompt the User to check that a file called
+        # characterFile.json sits in the root directory of this program
+        ans = input("Please ensure the file is called 'characterFile.json', then press [1]...")
+        # If the User has entered "1", then use the WITH keyword to open the
+        # JSON file "characterFile"
+        if ans == "1":
+            # Opening the file, referring to the created object as "read_file"
+            with open("characterFile.json") as read_file:
+                # Using the JSON module to load the contents of "read_file"
+                # into the ImportedChars list
+                ImportChars = json.load(read_file)
+                # Using a FOR loop, we take the list-of-lists in ImportedChars
+                for character in ImportChars:
+                    # and insert them into the gameChars list using the append
+                    # method to insert them at the newest index
+                    gameChars.append(characterClass(character['name'], character['type'], character['health'], character['power'], character['sAttackPwr'], character['speed']))
+
+            # We then print out the list of gameChars to the User
+            for x in gameChars:
+                # We use the character's getStats() method
+                print(x.getStats())
+
+            # Calling the menu fucntion, parsing it the gameChars list
+            menu(gameChars)
 
 
 def main():
     # An empty list, that will hold the randomly generated characters
     gameChars = []
-
-    # For loop used to generate 10 random characters and insert them into
-    # the gameChars list
-    for x in range(10):
-        # Generating a new instance of a randomly selected character from
-        # the generateCharacters function, parsing a randomly selected type
-        y = generateCharacters(charTypes)
-        # Adding this newly generated character to gameChars, at position x
-        gameChars.insert(x, y)
-
     # Start of the menu system
     print("Welcome to the RPG Character Simulator")
-    print("Here is your randomly generated team: ")
-    # For loop for showing the full list of characters
-    for z in gameChars:
-        print(z.getStats())
-    # Calling the menu funtion, and parsing the list of characters in gameChars
-    menu(gameChars)
+    # Asking the User if they want to generate new characters or load them from
+    # a file
+    ans = input("Would you like to generate 10 random characters [1] or load them from a file[2]?: ")
+    # If the User inputs "1", then they wish to generate 10 random characters
+    if ans == "1":
+        # For loop used to generate 10 random characters and insert them into
+        # the gameChars list
+        for x in range(10):
+            # Generating a new instance of a randomly selected character from
+            # the generateCharacters function, parsing a randomly selected type
+            y = generateCharacters(charTypes)
+            # Adding this newly generated character to gameChars, at position x
+            gameChars.insert(x, y)
+        # Showing the User their randomly generated characters
+        print("Here is your randomly generated team: ")
+        # For loop for showing the full list of characters
+        for z in gameChars:
+            print(z.getStats())
+        # Calling the menu funtion, and parsing the list of characters in
+        # gameChars
+        menu(gameChars)
+    # If the User enters a "2", then they wish to open characters from a file
+    elif ans == "2":
+        # Calling the openCharsToFile function, and parsing it the empty
+        # gameChars list
+        openCharsToFile(gameChars)
 
 
 # Calling the main() function

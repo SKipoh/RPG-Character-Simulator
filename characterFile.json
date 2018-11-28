@@ -1,0 +1,82 @@
+[
+    {
+        "health": 100,
+        "name": "da fu en ",
+        "power": 30,
+        "sAttackPwr": 60,
+        "speed": 10,
+        "type": "Elf"
+    },
+    {
+        "health": 100,
+        "name": "tuk ar da ",
+        "power": 90,
+        "sAttackPwr": 40,
+        "speed": 50,
+        "type": "Dragon"
+    },
+    {
+        "health": 100,
+        "name": "tuk el low ",
+        "power": 30,
+        "sAttackPwr": 60,
+        "speed": 10,
+        "type": "Elf"
+    },
+    {
+        "health": 100,
+        "name": "ant en ant ",
+        "power": 90,
+        "sAttackPwr": 40,
+        "speed": 50,
+        "type": "Dragon"
+    },
+    {
+        "health": 100,
+        "name": "tuk en el ",
+        "power": 90,
+        "sAttackPwr": 40,
+        "speed": 50,
+        "type": "Dragon"
+    },
+    {
+        "health": 100,
+        "name": "ar da ar ",
+        "power": 90,
+        "sAttackPwr": 40,
+        "speed": 50,
+        "type": "Dragon"
+    },
+    {
+        "health": 100,
+        "name": "kar ing tuk ",
+        "power": 30,
+        "sAttackPwr": 60,
+        "speed": 10,
+        "type": "Elf"
+    },
+    {
+        "health": 100,
+        "name": "da cha ing ",
+        "power": 50,
+        "sAttackPwr": 70,
+        "speed": 30,
+        "type": "Wizard"
+    },
+    {
+        "health": 100,
+        "name": "da cha low ",
+        "power": 50,
+        "sAttackPwr": 70,
+        "speed": 30,
+        "type": "Wizard"
+    },
+    {
+        "health": 100,
+        "name": "da cha tuk ",
+        "power": 30,
+        "sAttackPwr": 60,
+        "speed": 10,
+        "type": "Elf"
+    }
+]
